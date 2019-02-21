@@ -1,28 +1,34 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import styled from 'styled-components'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+const UL = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+`
+const LI = styled.li`
+  background: tomato;
+  padding: 5px;
+  width: 200px;
+  height: 150px;
+  margin-top: 10px;
+  line-height: 150px;
+
+`
+export const App = () => {
+  return (
+    <React.Fragment>
+      <UL class="flex-container">
+        <LI class="flex-item">1</LI>
+        <LI class="flex-item">2</LI>
+        <LI class="flex-item">3</LI>
+        <LI class="flex-item">4</LI>
+        <LI class="flex-item">5</LI>
+        <LI class="flex-item">6</LI>
+      </UL>
+    </React.Fragment>
+  )
 }
-
-export default App;
