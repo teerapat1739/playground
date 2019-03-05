@@ -35,6 +35,10 @@ const HambergerIcon = styled.i`
         align-items: flex-end;
         padding: 10px 10px 10px 10px;
     }
+    &.hamburger:hover {
+        /* background-color: red; */
+    }
+
     @media only screen and ( min-width: 768px ) {
         &.hamburger {
             display: none;
@@ -50,7 +54,7 @@ const HeaderTitle = ({ title }) => (
 )
 
 const MenuList = () => ( 
-    <MenuContainer>
+    <MenuContainer className="nav">
         <MenuItem >
             Github
         </MenuItem>
