@@ -1,4 +1,5 @@
 import React from 'react'
+import { compose, withProps, withHandlers, withState } from 'recompose'
 import styled from 'styled-components'
 
 const Nav = styled.div`
@@ -18,14 +19,18 @@ const MenuContainer = styled.div`
     padding: 10px 10px 10px 10px;
     width: 300px;
     display: flex;
+    @media only screen and ( max-width: 768px ) {
+        /* display: block; */
+        display: none;
+    }
 `
 const MenuItem = styled.div`
     font-size: 20px;
     color: #ffffff;
     flex: 1;
-    text-align: center;
+    /* text-align: center; */
     @media only screen and ( max-width: 768px ) {
-    display: none;
+      margin: 20px 20px 20px 20px;
     }
 `
 const HambergerIcon = styled.i`
@@ -45,7 +50,15 @@ const HambergerIcon = styled.i`
         }
     }
 `
+const SideBarContainer = styled.div`
+    display: block;
+    width: 300px;
+    height: 100vh;
+    background-color: #4d4d4d;
+    padding: 30px 30px 30px 30px;
+    flex-direction: column;
 
+`
 
 const HeaderTitle = ({ title }) => (
     <NavTitle>
@@ -53,24 +66,54 @@ const HeaderTitle = ({ title }) => (
     </NavTitle>
 )
 
+const MenuItems = () => (
+    <React.Fragment>
+        <MenuItem >
+            Github
+        </MenuItem>
+        <MenuItem >
+            Github
+        </MenuItem>
+        <MenuItem >
+            Github
+        </MenuItem>
+    </React.Fragment>
+)
+const SideBar = () => (
+    <SideBarContainer>
+      <MenuItems />
+    </SideBarContainer>
+)
 const MenuList = () => ( 
-    <MenuContainer className="nav">
-        <MenuItem >
-            Github
-        </MenuItem>
-        <MenuItem >
-            Github
-        </MenuItem>
-        <MenuItem >
-            Github
-        </MenuItem>
+    <MenuContainer>
+      <MenuItems />
     </MenuContainer>
     )
 
-export default ({ title = 'Teerapat' }) => (
+
+const Header = ({title, onClick, toggle}) => (
     <Nav>
+        {/* {console.log(click)} */}
         <HeaderTitle title={title} />
         <MenuList/>
-        <HambergerIcon className="fa fa-bars hamburger" />
+        <HambergerIcon className="fa fa-bars hamburger" onClick={onClick}/>
+        {toggle && <SideBar />}
     </Nav>
 )
+
+const isToggle = withState('toggle','setToggle', false)
+
+const addHandlers = withHandlers({
+    onClick: ({setToggle, toggle}) => () => setToggle(!toggle)
+})
+
+export default compose(
+    withProps( props => {
+        return {
+            ...props
+        }
+      }
+    ),
+    isToggle,
+    addHandlers,
+)(Header)
