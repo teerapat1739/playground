@@ -92,7 +92,7 @@ const MenuList = () => (
 
 
 const Header = ({title, onClick, toggle}) => (
-    <Nav>
+    <Nav ref={node => { this.node = node; }}>
         {/* {console.log(click)} */}
         <HeaderTitle title={title} />
         <MenuList/>
@@ -102,9 +102,19 @@ const Header = ({title, onClick, toggle}) => (
 )
 
 const isToggle = withState('toggle','setToggle', false)
+const isFocus = withState('popupVisible', 'setPopup', false)
 
 const addHandlers = withHandlers({
-    onClick: ({setToggle, toggle}) => () => setToggle(!toggle)
+    onClick: ({setToggle, toggle}) => () => setToggle(!toggle),
+    handleClick: ({ popupVisible, setPopup }) => () => {
+        if (!popupVisible) {
+            document.addEventListener('click', this.handleOutsideClick, false);
+          } else {
+            document.removeEventListener('click', this.handleOutsideClick, false);
+          }
+      
+          setPopup(!popupVisible)
+    }
 })
 
 export default compose(
@@ -115,5 +125,11 @@ export default compose(
       }
     ),
     isToggle,
+    isFocus,
     addHandlers,
+    withHandlers({
+        handleOutsideClick: ({handleClick}) => (e) => {
+
+        }
+    })
 )(Header)
