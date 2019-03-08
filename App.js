@@ -5,7 +5,7 @@ import Header from './Header'
 export const App = () => {
   return (
     <React.Fragment>
-      <Header title="Teerapat Header"/>
+     gg
     </React.Fragment>
   )
 }
