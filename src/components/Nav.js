@@ -152,14 +152,14 @@ const Navigation = styled.header`
   }
 `;
 
-const Nav = ({isExpanded, handleToggle}) => (
+const Nav = ({isExpanded, handleToggle, HeaderTitle }) => (
     <Navigation>
     <div className="logo">
       <Link to="/">
-        <p>React Responsive Navigation</p>
+        <p>{HeaderTitle}</p>
         <em>
           <div className="letterhead">
-            <span className="name">kentorry</span>
+            <span className="name">teerapat1739.github</span>
             <span className="gray">.io</span>
           </div>
         </em>

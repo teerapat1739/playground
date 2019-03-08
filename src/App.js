@@ -10,7 +10,7 @@ import Contact from "./pages/Contact/ContactPage";
 
 export const App = () => (
   <div>
-    <Nav />
+    <Nav HeaderTitle="👦🏻Teerapat   💻 What the bug." />
     <div className="container">
       <Route exact={true} path="/" component={Home} />
       <Route exaxt path="/about" component={About} />
