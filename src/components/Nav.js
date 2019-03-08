@@ -1,7 +1,6 @@
 import React, { Component } from "react";
+import { withState, withHandlers, compose } from 'recompose'
 import { NavLink, Link } from "react-router-dom";
-
-// import { BurgerIcon } from './'
 import styled from "styled-components";
 
 const Navigation = styled.header`
@@ -153,56 +152,46 @@ const Navigation = styled.header`
   }
 `;
 
-class Nav extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isExpanded: false
-    };
-  }
-  handleToggle(e) {
-    e.preventDefault();
-    this.setState({
-      isExpanded: !this.state.isExpanded
-    });
-  }
-  render() {
-    const { isExpanded } = this.state;
+const Nav = ({isExpanded, handleToggle}) => (
+    <Navigation>
+    <div className="logo">
+      <Link to="/">
+        <p>React Responsive Navigation</p>
+        <em>
+          <div className="letterhead">
+            <span className="name">kentorry</span>
+            <span className="gray">.io</span>
+          </div>
+        </em>
+      </Link>
+    </div>
+    <nav className="nav">
+      <i
+        className="fa fa-bars"
+        aria-hidden="true"
+        onClick={handleToggle}
+      />
+      <ul className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
+        <NavLink activeClassName="active" to="/">
+          <li>home</li>
+        </NavLink>
+        <NavLink activeClassName="active" to="/about">
+          <li>about</li>
+        </NavLink>
+        <NavLink activeClassName="active" to="/contact">
+          <li>contact</li>
+        </NavLink>
+      </ul>
+    </nav>
+  </Navigation>
+)
 
-    return (
-      <Navigation>
-        <div className="logo">
-          <Link to="/">
-            <p>React Responsive Navigation</p>
-            <em>
-              <div className="letterhead">
-                <span className="name">kentorry</span>
-                <span className="gray">.io</span>
-              </div>
-            </em>
-          </Link>
-        </div>
-        <nav className="nav">
-          <i
-            className="fa fa-bars"
-            aria-hidden="true"
-            onClick={e => this.handleToggle(e)}
-          />
-          <ul className={`collapsed ${isExpanded ? "is-expanded" : ""}`}>
-            <NavLink activeClassName="active" to="/">
-              <li>home</li>
-            </NavLink>
-            <NavLink activeClassName="active" to="/about">
-              <li>about</li>
-            </NavLink>
-            <NavLink activeClassName="active" to="/contact">
-              <li>contact</li>
-            </NavLink>
-          </ul>
-        </nav>
-      </Navigation>
-    );
-  }
-}
-
-export default Nav;
+export default compose(
+    withState('isExpanded', 'setExpanded', false),
+    withHandlers({
+        handleToggle: ({isExpanded, setExpanded}) => (e) => {
+            e.preventDefault()
+            setExpanded(!isExpanded)
+        }
+    })
+)(Nav)
